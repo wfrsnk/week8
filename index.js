@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import http from 'http';
 import CORS from './CORS.js';
 import UserModel from './models/User.js';
+import puppeteer from 'puppeteer'
 const User = UserModel(m);
 const app = appSrc(express, bodyParser, fs, crypto, http, CORS, User, m);
 const PORT = process.env.PORT || 9000;

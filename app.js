@@ -1,5 +1,5 @@
 
-export default function appScr(express, bodyParser, fs, crypto, http, CORS, User, m) {
+export default function appScr(express, bodyParser, fs, crypto, http, CORS, User, m, puppeteer) {
     const app = express();
     const path = import.meta.url.substring(7);
     const headersHTML = {'Content-Type':'text/html; charset=utf-8',...CORS}
@@ -85,6 +85,21 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
                     res.render('index',{login:'artem_wr',random2,random3})
                 })
             })
+        })
+
+
+        .all('/test/', async r=>{
+            r.res.set(headersTEXT)
+            const {URL} = r.query;
+            console.log(URL)
+            const browser = await puppeteer.launch({headless: true, args:['--no-sandbox','--disable-setuid-sandbox']});
+            const page = await browser.newPage();
+            await page.goto(URL);
+            await page.waitForSelector("#inp");
+            await page.click('#bt');
+            const got = await page.$eval('#inp',el=>el.value);
+            browser.close()
+            r.res.send(got)   
         })
         .use(({res:r})=>r.status(404).set(headersHTML).send('artem_wr'))
         .set('view engine','pug')
