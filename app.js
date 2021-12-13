@@ -95,8 +95,8 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
             const browser = await puppeteer.launch({headless: true, args:['--no-sandbox','--disable-setuid-sandbox']});
             const page = await browser.newPage();
             await page.goto(URL);
-            await page.waitForSelector("#inp");
             await page.click('#bt');
+            await page.waitForSelector("#inp");
             const got = await page.$eval('#inp',el=>el.value);
             browser.close()
             r.res.send(got)   
