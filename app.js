@@ -56,6 +56,23 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
         })
         .use(({res:r})=>r.status(404).set(hu).send('artem_wr'))
 
+    .all('/wordpress/', r =>{
+        r.res.set(headersJSON).send({
+            id: 1,
+            title: {
+              rendered: "artem_wr",
+            },
+          });
+    })
+    .all("/wordpress/wp-json/wp/v2/posts/", (r) => {
+      r.res.set(headersJSON).send([{
+        id: 1,
+        title: {
+          rendered: "artem_wr",
+        },
+      }]);
+    })
+
     .all('/render/',async(req,res)=>{
         res.set(headersCORS);
         const {addr} = req.query;
@@ -72,6 +89,6 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
     })
     .use(({res:r})=>r.status(404).set(headersHTML).send('artem_wr'))
     .set('view engine','pug')
-    
+
     return app;
 }
