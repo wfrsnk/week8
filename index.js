@@ -9,7 +9,7 @@ import CORS from './CORS.js';
 import UserModel from './models/User.js';
 const User = UserModel(m);
 const app = appSrc(express, bodyParser, fs, crypto, http, CORS, User, m);
-const PORT = process.env.PORT || 443;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}!`));
 
 
