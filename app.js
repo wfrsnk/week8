@@ -7,7 +7,7 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
         ...CORS
     }
     const headersJSON={'Content-Type':'application/json',...CORS}
-    
+
     app
         .use(bodyParser.urlencoded({extended:true}))       
         .all('/login/', r => {
@@ -56,7 +56,6 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
                 console.log(e.codeName);
             }      
         })
-        .use(({res:r})=>r.status(404).set(hu).send('artem_wr'))
 
     .all('/wordpress/', r =>{
         r.res.set(headersJSON).send({
