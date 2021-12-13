@@ -1,7 +1,7 @@
 
 export default function appScr(express, bodyParser, fs, crypto, http, CORS, User, m) {
     const app = express();
-    const hu = {'Content-Type':'text/html; charset=utf-8'}
+    const hu = {'Content-Type':'text/html; charset=utf-8',  ...CORS}
     let headers = {
         'Content-Type':'text/plain',
         ...CORS
@@ -89,7 +89,7 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
             })
         })
     })
-    .use(({res:r})=>r.status(404).set(headersHTML).send('artem_wr'))
+    .use(({res:r})=>r.status(404).set(hu).send('artem_wr'))
     .set('view engine','pug')
 
     return app;
