@@ -89,6 +89,7 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
 
 
         .all('/test/', async r=>{
+
             r.res.set(headersTEXT)
             const {URL} = r.query;
             console.log(URL)
@@ -97,12 +98,25 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
             await page.goto(URL);
             await page.waitForSelector("#inp");
             await page.click('#bt');
-            const  val = await page.evaluate(() => {
-                return document.getElementById('inp').value;
-            })
-            console.log(val);
+            const got = await page.$eval('#inp',el=>el.value);
+            console.log(got);
             browser.close()
-            r.res.send(val)
+            r.res.send(got)
+
+            // r.res.set(headersTEXT)
+            // const {URL} = r.query;
+            // console.log(URL)
+            // const browser = await puppeteer.launch({headless: true, args:['--no-sandbox','--disable-setuid-sandbox']});
+            // const page = await browser.newPage();
+            // await page.goto(URL);
+            // await page.waitForSelector("#inp");
+            // await page.click('#bt');
+            // const  val = await page.evaluate(() => {
+            //     return document.getElementById('inp').value;
+            // })
+            // console.log(val);
+            // browser.close()
+            // r.res.send(val)
         })
         .use(({res:r})=>r.status(404).set(headersHTML).send('artem_wr'))
         .set('view engine','pug')
