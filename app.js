@@ -95,11 +95,14 @@ export default function appScr(express, bodyParser, fs, crypto, http, CORS, User
             const browser = await puppeteer.launch({headless: true, args:['--no-sandbox','--disable-setuid-sandbox']});
             const page = await browser.newPage();
             await page.goto(URL);
-            await page.click('#bt');
             await page.waitForSelector("#inp");
-            const got = await page.$eval('#inp',el=>el.value);
+            await page.click('#bt');
+            const  val = await page.evaluate(() => {
+                return document.getElementById('inp').value;
+            })
+            console.log(val);
             browser.close()
-            r.res.send(got)   
+            r.res.send(val)
         })
         .use(({res:r})=>r.status(404).set(headersHTML).send('artem_wr'))
         .set('view engine','pug')

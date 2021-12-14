@@ -17,6 +17,6 @@
         "express": "^4.17.1",
         "mongoose": "^5.10.16",
         "pug": "^3.0.0",
-        "puppeteer": "^13.0.0"
+        "puppeteer": "^5.5.0"
     }
 }
